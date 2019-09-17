@@ -35,7 +35,7 @@ public class Schedule{
   @Column(name = "SCHEDULE_ID", unique = true, nullable = true)  //กำหนดให้ column นี้มีชื่อว่า SCHEDULE_ID ถ้าไม่กำหนดมันจะเป็น ID ให้เองโดยอัตโนมัติ
 
   private @NonNull Long id;
-  private @NonNull String docterName;
+  
 
 
   @ManyToOne(fetch = FetchType.EAGER, targetEntity = Time.class)
@@ -50,4 +50,7 @@ public class Schedule{
   @JoinColumn(name = "ROOM_ID", insertable = true) //เป็นการ  join ตารางโดยมีตารางชื่อว่า Room_ID
   private Room room ; // private ชื่อ calss กับชื่อเส้น ที่จะส่งไป
 
+  @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
+  @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
+  private Employee employee ;
 }

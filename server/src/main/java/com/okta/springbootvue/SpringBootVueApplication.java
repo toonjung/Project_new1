@@ -3,11 +3,15 @@ package com.okta.springbootvue;
 import java.util.stream.Stream;
 
 import com.okta.springbootvue.Entity.Day;
+import com.okta.springbootvue.Entity.Employee;
 import com.okta.springbootvue.Entity.Room;
 import com.okta.springbootvue.Entity.Time;
+import com.okta.springbootvue.Entity.Employee;
 import com.okta.springbootvue.Repository.DayRepository;
+import com.okta.springbootvue.Repository.EmployeeRepository;
 import com.okta.springbootvue.Repository.RoomRepository;
 import com.okta.springbootvue.Repository.TimeRepository;
+import com.okta.springbootvue.Repository.EmployeeRepository;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,9 +25,14 @@ public class SpringBootVueApplication {
 	}
 
 	@Bean
-    ApplicationRunner init(DayRepository dayRepository, TimeRepository timeRepository ,
+    ApplicationRunner init(EmployeeRepository employeeRepository,DayRepository dayRepository, TimeRepository timeRepository ,
 	RoomRepository roomRepository) {
 		return args -> {
+			Stream.of("พญ.ขวัญชนก อังศุภโชติ", "นพ.นครินทร์ สาลีทอง", "นพ.อดิเรก ตรียสรศัย", "นพ.ยิ่งยศ สันติธนานนท์").forEach(employees-> {
+				Employee employee = new Employee();
+			    employee.setEmployee(employees);
+				employeeRepository.save(employee);
+			});
 			Stream.of("Monday", "Thuesday", "Wendenday", "Thursday", "Friday").forEach(days-> {
 				Day day = new Day();
 			    day.setDay(days);
