@@ -14,7 +14,7 @@
           <v-btn 
             class="ma-6" 
             small color="primary" 
-            dark 
+            dark
             @click="findEmployee,getRooms(),getDays(),getDuraions()">
             Search
           </v-btn>
