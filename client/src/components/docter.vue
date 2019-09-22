@@ -5,12 +5,12 @@
         
         <v-row>
           <v-text-field 
-            v-model="schedule.employee" 
+            v-model="schedule.employeeId" 
             label="DOCTOR ID" 
             :rules="[(v) => !!v || 'กรุณากรอกข้อมูล']" 
             required > 
           </v-text-field>
-          <p v-if="employeeCheck != ''">Docter Name : {{employeeName}}</p>
+          <p v-if="employeeCheck != ''">Docter Name : {{employee}}</p>
           <v-btn 
             class="ma-6" 
             small color="primary" 
@@ -222,7 +222,8 @@ import http from "../http-common"
         .then(response => {
           console.log(response);
           if (response.data != null) {
-            this.employeeName = response.data.name;
+            this.employeeName = response.data.employee;
+
             this.employeeCheck = response.status;
 
           } else {
