@@ -5,13 +5,11 @@ import java.util.stream.Stream;
 import com.okta.springbootvue.Entity.Day;
 import com.okta.springbootvue.Entity.Employee;
 import com.okta.springbootvue.Entity.Room;
-import com.okta.springbootvue.Entity.Time;
-import com.okta.springbootvue.Entity.Employee;
+import com.okta.springbootvue.Entity.Duration;
 import com.okta.springbootvue.Repository.DayRepository;
 import com.okta.springbootvue.Repository.EmployeeRepository;
 import com.okta.springbootvue.Repository.RoomRepository;
-import com.okta.springbootvue.Repository.TimeRepository;
-import com.okta.springbootvue.Repository.EmployeeRepository;
+import com.okta.springbootvue.Repository.DurationRepository;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +23,7 @@ public class SpringBootVueApplication {
 	}
 
 	@Bean
-    ApplicationRunner init(EmployeeRepository employeeRepository,DayRepository dayRepository, TimeRepository timeRepository ,
+    ApplicationRunner init(EmployeeRepository employeeRepository,DayRepository dayRepository, DurationRepository durationRepository ,
 	RoomRepository roomRepository) {
 		return args -> {
 			Stream.of("พญ.ขวัญชนก อังศุภโชติ", "นพ.นครินทร์ สาลีทอง", "นพ.อดิเรก ตรียสรศัย", "นพ.ยิ่งยศ สันติธนานนท์").forEach(employees-> {
@@ -46,11 +44,11 @@ public class SpringBootVueApplication {
 					"12.00-13.00",
 					"13.00-14.00", 
 					"14.00-15.00",
-					"15.00-16.00").forEach(times-> {
+					"15.00-16.00").forEach(durations-> {
 				
-				Time time = new Time();
-				time.setTime(times);
-				timeRepository.save(time);
+				Duration duration = new Duration();
+				duration.setDuration(durations);
+				durationRepository.save(duration);
             });
             
             Stream.of("ห้องตรวจ1", "ห้องตรวจ2", "ห้องตรวจ3","ห้องตรวจ4","ห้องตรวจ5").forEach(rooms -> {
@@ -60,8 +58,9 @@ public class SpringBootVueApplication {
 			});
 
 			dayRepository.findAll().forEach(System.out::println);
-            timeRepository.findAll().forEach(System.out::println);
-            roomRepository.findAll().forEach(System.out::println);
+            durationRepository.findAll().forEach(System.out::println);
+			roomRepository.findAll().forEach(System.out::println);
+			employeeRepository.findAll().forEach(System.out::println);
 		};    
 	}
 

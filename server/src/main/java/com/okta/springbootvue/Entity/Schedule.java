@@ -38,9 +38,9 @@ public class Schedule{
   
 
 
-  @ManyToOne(fetch = FetchType.EAGER, targetEntity = Time.class)
-  @JoinColumn(name = "TIME_ID", insertable = true)
-  private Time time;
+  @ManyToOne(fetch = FetchType.EAGER, targetEntity = Duration.class)
+  @JoinColumn(name = "DURATION_ID", insertable = true)
+  private Duration duration;
   
   @ManyToOne(fetch = FetchType.EAGER, targetEntity = Day.class)
   @JoinColumn(name = "DAY_ID", insertable = true)
