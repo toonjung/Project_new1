@@ -27,16 +27,16 @@ import com.okta.springbootvue.Entity.Schedule;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "Duration")
-public class Duration{
+@Table(name = "PeriodTime")
+public class PeriodTime{
 
   @Id
-  @SequenceGenerator(name = "Duration_SEQ", sequenceName = "Duration_SEQ")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Duration_SEQ")
-  @Column(name = "Duration_ID", unique = true, nullable = true)
+  @SequenceGenerator(name = "PeriodTime_SEQ", sequenceName = "PeriodTime_SEQ")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PeriodTime_SEQ")
+  @Column(name = "PeriodTime_ID", unique = true, nullable = true)
 
   private @NonNull Long id;
-  private @NonNull String duration;
+  private @NonNull String PeriodTime;
   
   
   @OneToMany(fetch = FetchType.EAGER)

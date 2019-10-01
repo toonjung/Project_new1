@@ -38,9 +38,9 @@ public class Schedule{
   
 
 
-  @ManyToOne(fetch = FetchType.EAGER, targetEntity = Duration.class)
-  @JoinColumn(name = "DURATION_ID", insertable = true)
-  private Duration duration;
+  @ManyToOne(fetch = FetchType.EAGER, targetEntity = PeriodTime.class)
+  @JoinColumn(name = "PERIODTIME_ID", insertable = true)
+  private PeriodTime periodTime;
   
   @ManyToOne(fetch = FetchType.EAGER, targetEntity = Day.class)
   @JoinColumn(name = "DAY_ID", insertable = true)
@@ -50,7 +50,7 @@ public class Schedule{
   @JoinColumn(name = "ROOM_ID", insertable = true) //เป็นการ  join ตารางโดยมีตารางชื่อว่า Room_ID
   private Room room ; // private ชื่อ calss กับชื่อเส้น ที่จะส่งไป
 
-  @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
-  @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
-  private Employee employee ;
+  @ManyToOne(fetch = FetchType.EAGER, targetEntity = DoctorProfile.class)
+  @JoinColumn(name = "DOCTORPROFILE_ID", insertable = true)
+  private DoctorProfile doctorProfile ;
 }

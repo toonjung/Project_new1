@@ -5,20 +5,31 @@
         
         <v-row>
           <v-text-field 
-            v-model="schedule.employeeId" 
+            v-model="schedule.doctorProfileId" 
             label="DOCTOR ID" 
             :rules="[(v) => !!v || 'กรุณากรอกข้อมูล']" 
             required > 
           </v-text-field>
-          <p v-if="employeeCheck != ''">Docter Name : {{employee}}</p>
+          
           <v-btn 
             class="ma-6" 
             small color="primary" 
             dark
-            @click="findEmployee,getRooms(),getDays(),getDuraions()">
+            @click="findDoctorProfile"
+            >
             Search
           </v-btn>
-        </v-row>
+          </v-row>
+          <br>
+
+          <v-row>
+          <div v-if="doctorFound == true">
+             DOCTOR NAME :
+              {{doctorFname}} 
+              {{doctorLname}}
+          </div>
+          </v-row>
+        
         <v-select 
           v-model="schedule.roomId"  
           :items="rooms"
@@ -38,9 +49,9 @@
           required >
         </v-select>
         <v-select 
-          v-model="schedule.durationId" 
-          :items="durations" 
-          item-text="duration" 
+          v-model="schedule.periodTimeId" 
+          :items="periodTimes" 
+          item-text="periodTime" 
           item-value="id"  
           label="โปรดเลือกเวลา"
           :rules = "[(v) => !!v || 'กรุณากรอกข้อมูล']"
@@ -51,7 +62,7 @@
             class="mr-4" 
             color="primary"
              @click="saveSchedule" 
-             :class="{ red: !valid, green: valid }">
+             >
             ADD
           </v-btn>
           <v-btn 
@@ -61,35 +72,7 @@
         </v-row >
         </v-col>
         <v-col align = "center">
-          <v-simple-table>
-            <thead>
-              <tr>
-                <th class="text-left">Day/time</th>
-                <th class="text-left"> 08.00-09.00 </th>
-                <th class="text-left"> 09.00-10.00 </th>
-                <th class="text-left"> 10.00-11.00 </th>
-                <th class="text-left"> 11.00-12.00 </th>
-                <th class="text-left"> 12.00-13.00</th>
-                <th class="text-left"> 13.00-14.00 </th>
-                <th class="text-left"> 14.00-15.00 </th>
-                <th class="text-left"> 15.00-16.00 </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr >
-                <tr v-for="item in desserts" :key="item.name">
-                <td>{{ item.Day }} </td>
-                <td>{{ item.time1 }}</td>
-                <td>{{ item.time2 }}</td>
-                <td>{{ item.time3 }}</td>
-                <td>{{ item.time4 }}</td>
-                <td>{{ item.time5 }}</td>
-                <td>{{ item.time6 }}</td>
-                <td>{{ item.time7 }}</td>
-                <td>{{ item.time8 }}</td>
-               </tr>
-             </tbody>
-          </v-simple-table>
+          
       </v-col>
     </v-row>
   </v-container>
@@ -103,76 +86,22 @@ import http from "../http-common"
     data ()  {
       return{ 
         schedule: {
-          employeeId:"",
+          doctorProfileId:"",
           roomId:"",
           dayId:"",
-          durationId:"",
+          periodTimeId:"", //คลาสที่เอามาเก็บตัวแxร
+          
         },
-        
+     
       valid: false,
-      employeeCheck: false,
-      employeeName: "",
+      doctorProfileCheck: false,
+      doctorFound:false,
+      doctorFname:"",
+      doctorLname:"",
       rooms:[],
       days:[],
-      durations:[],
-       desserts: [
-          {
-            Day: 'Monday',
-            time1:'',
-            time2:'',
-            time3:'',
-            time4:'',
-            time5:'',
-            time6:'',
-            time7:'',
-            time8:'',
-          },
-          {
-           Day: 'Tuseday',
-            time1:'',
-            time2:'',
-            time3:'',
-            time4:'',
-            time5:'',
-            time6:'',
-            time7:'',
-            time8:'',
-          },
- {
-           Day: 'Wednesday',
-            time1:'',
-            time2:'',
-            time3:'',
-            time4:'',
-            time5:'',
-            time6:'',
-            time7:'',
-            time8:'',
-          },
-           {
-           Day: 'Thursday',
-            time1:'',
-            time2:'',
-            time3:'',
-            time4:'',
-            time5:'',
-            time6:'',
-            time7:'',
-            time8:'',
-          },
-           {
-           Day: 'Friday',
-            time1:'',
-            time2:'',
-            time3:'',
-            time4:'',
-            time5:'',
-            time6:'',
-            time7:'',
-            time8:'',
-          },
-         ],  
-      
+      periodTimes:[],
+         
       };
       
     },
@@ -205,29 +134,33 @@ import http from "../http-common"
         });
     },
     // ดึงข้อมูล Room ใส่ combobox
-    getDuraions() {
+    getPeriodTimes() {
       http
-        .get("/duration")
+        .get("/PeriodTime")
         .then(response => {
-          this.durations = response.data;
+          this.periodTimes = response.data;
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
-        
-    }, findEmployee() {
+        /* eslint-disable */
+    }, findDoctorProfile() {
       http
-        .get("/employee/" + this.schedule.employeeId)
+        .get("/doctorProfile/" + this.schedule.doctorProfileId)
         .then(response => {
           console.log(response);
           if (response.data != null) {
-            this.employeeName = response.data.employee;
-
-            this.employeeCheck = response.status;
-
+            this.doctorFname = response.data.fname;
+            this.doctorLname = response.data.lname;
+            console.log(this.doctorFname);
+            console.log(this.doctorLname);
+            this.doctorProfileCheck = response.status;
+            this.doctorFound = true;
           } else {
             this.clear()
+            this.doctorFound = false;
+           // this.employeeNotFound = true;
           }          
         })
         .catch(e => {
@@ -239,14 +172,13 @@ import http from "../http-common"
     saveSchedule() {
       http
         .post(
-          "/schedule/" +
+          "/schedule/" + this.schedule.doctorProfileId +
+           "/" +
             this.schedule.roomId +
             "/" +
             this.schedule.dayId +
             "/" +
-            this.schedule.durationId +
-            "/" +
-            this.schedule.employeeId,
+            this.schedule.periodTimeId,
           this.schedule
         )
         .then(response => {
@@ -260,22 +192,19 @@ import http from "../http-common"
     },
     clear() {
       this.$refs.form.reset();
-      this.employeeCheck = false;
+      this.doctorProfileCheck = false;
+      this.doctorFound = false;
+     // this.employeeNotFound = true;
     },
-    refreshList() {
-      this.getRooms ();
-      this.getDays();
-      this.getDurations();
-      this.findEmployee();
-    }
+  
 
      /* eslint-enable no-console */
     },
     mounted(){
      this.getRooms ();
       this.getDays();
-      this.getDurations();
-      this.findEmployee();
+      this.getPeriodTimes();
+ 
     }
   
   };
