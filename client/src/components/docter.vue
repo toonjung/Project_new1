@@ -93,7 +93,6 @@ import http from "../http-common"
         },
      
       valid: false,
-      doctorProfileCheck: false,
       doctorFound:false,
       doctorFname:"",
       doctorLname:"",
@@ -159,7 +158,7 @@ import http from "../http-common"
           } else {
             this.clear()
             this.doctorFound = false;
-           // this.employeeNotFound = true;
+           
           }          
         })
         .catch(e => {
@@ -191,9 +190,8 @@ import http from "../http-common"
     },
     clear() {
       this.$refs.form.reset();
-      this.doctorProfileCheck = false;
       this.doctorFound = false;
-     // this.employeeNotFound = true;
+     
     },
   
 
