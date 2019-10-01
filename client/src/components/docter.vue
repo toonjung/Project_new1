@@ -20,8 +20,7 @@
             Search
           </v-btn>
           </v-row>
-          <br>
-
+          
           <v-row>
           <div v-if="doctorFound == true">
              DOCTOR NAME :
