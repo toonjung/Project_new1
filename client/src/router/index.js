@@ -1,8 +1,9 @@
   
 import Vue from 'vue'
 import Router from 'vue-router';
-import ViewAppointmentsData from '../components/ViewAppointmentsData';
-import Appointments from '../components/Appointments';
+import Doctor from '../components/doctor';
+import Viewschudule from '../components/viewschudule';
+
 Vue.use(Router);
 
 export default new Router({
@@ -10,11 +11,11 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
-            component: Appointments
+            component: Doctor
         },
         {
-            path: '/viewAppm',
-            component: ViewAppointmentsData
+            path: '/viewschudule',
+            component: Viewschudule
         },
         
     ]
