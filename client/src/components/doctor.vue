@@ -1,8 +1,8 @@
 <template>
   <v-container >
-    <div v-if="doctorProfileNotFound">
+    <div v-if="doctorNotFound">
       <v-alert dense outlined type="error">
-        <strong>ไม่พบข้อมูลผู้ป่วย</strong> กรุณากรอกข้อมูลอีกครั้ง
+        <strong>ไม่พบข้อมูลแพทย์</strong> กรุณากรอกข้อมูลอีกครั้ง
       </v-alert>
     </div>
 
@@ -35,7 +35,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <div v-if="doctorFound == true">
+              <div v-if="doctorCheck != ''">
                 DOCTOR NAME :
                   {{doctorFname}} 
                   {{doctorLname}}
@@ -107,12 +107,12 @@ import http from "../http-common"
           
         },
         valid: false,
-        doctorFound:false,
-        doctorProfileNotFound:false,
+        doctorCheck:false,
         saveSC:false,
         saveUSC:false,
         doctorFname:"",
         doctorLname:"",
+        doctorNotFound:false,
         rooms:[],
         days:[],
         periodTimes:[],
@@ -171,12 +171,11 @@ import http from "../http-common"
             this.doctorLname = response.data.lname;
             console.log(this.doctorFname);
             console.log(this.doctorLname);
-            this.doctorFound = true;
-            this.doctorProfileNotFound = false;
+            this.doctorCheck = response.status;
+            this.doctorNotFound = false;
           } else {
             this.clear()
-            this.doctorFound = false;
-            this.doctorProfileNotFound = true;  
+            this.doctorNotFound = true;  
           }          
         })
         .catch(e => {
@@ -184,8 +183,9 @@ import http from "../http-common"
         });
       this.submitted = true;
       },
-    // function เมื่อกดปุ่ม submit
-    saveSchedule() {
+      
+      // function เมื่อกดปุ่ม submit
+      saveSchedule() {
       http
         .post(
           "/schedule/" + this.schedule.doctorProfileId +
@@ -212,19 +212,18 @@ import http from "../http-common"
       this.submitted = true;
     },
     clear() {
-      this.$refs.form.reset();
-      this.doctorFound = false;
+      this.doctorCheck = false;
+      this.saveSC = false;
+      this.saveUSC = false;
+      this.doctorNotFound = false;
      
     },
-
-     
      /* eslint-enable no-console */
     },
     mounted(){
-     this.getRooms ();
+      this.getRooms ();
       this.getDays();
       this.getPeriodTimes();
- 
     }
   
   };
