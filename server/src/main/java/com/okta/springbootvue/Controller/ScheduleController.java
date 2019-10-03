@@ -64,7 +64,7 @@ public class ScheduleController {
     @PathVariable long day_id,
     @PathVariable long periodTime_id){
     
-    //VideoRental newVideoRental = new VideoRental();
+    
 
     DoctorProfile doctorProfile = doctorProfileRepository.findById(doctorProfile_id);
     Room room = roomRepository.findById(room_id); 
